@@ -14,14 +14,14 @@ function turn(cell){
   arr[x][y] = currentLetter;
   document.getElementById(cell).textContent = currentLetter;
 
-  if(checkWinner(currentLetter)) {
+  if(checkWinner()) {
     alert("Ganador")
   };
 
   currentLetter = (currentLetter === "X") ? "O" : "X";
 }
 
-function checkWinner(letter){
+function checkWinner(){
 	//Esto revisa en horizontal
   let numX = 0, numO = 0;
   for(let i = 0; i<3; i++) {
