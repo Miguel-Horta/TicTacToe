@@ -15,71 +15,60 @@ function turn(cell){
   document.getElementById(cell).textContent = currentLetter;
 
   if(checkWinner()) {
-    alert("Ganador")
-  };
+		setTimeout(() =>alert("Ganador"), 1);
+	}
 
   currentLetter = (currentLetter === "X") ? "O" : "X";
 }
 
 function checkWinner(){
 	//Esto revisa en horizontal
-  let numX = 0, numO = 0;
+  let numX = 0;
   for(let i = 0; i<3; i++) {
 		for(let j = 0; j<3; j++) {
-      if(arr[i][j] === "X") {
+			console.log(currentLetter);
+      if(arr[i][j] === currentLetter) {
         numX +=1;
       }
-			if(arr[i][j] === "O") {
-        numO +=1;
-      }
-			if (numX === 3 || numO === 3) {
+			if (numX === 3) {
 				return true;
 			}
 		}
-		numO = 0; numX = 0;
+		 numX = 0;
 	}
 	//Esto revisa en vertical
 	for(let i = 0; i<3; i++) {
 		for(let j = 0; j<3; j++) {
-			if(arr[j][i] === "X") {
+			if(arr[j][i] === currentLetter) {
 				numX +=1;
 			}
-			if(arr[j][i] === "O") {
-				numO +=1;
-			}
-			if (numX === 3 || numO === 3) {
+			if (numX === 3) {
 				return true;
 			}
 		}
-		numO = 0; numX = 0;
+		numX = 0;
 	}
 	//Esto revisa en diagonal -> \
 	for(let j = 0; j<3; j++) {
-		if(arr[j][j] === "X") {
+		if(arr[j][j] === currentLetter) {
 			numX +=1;
 		}
-		if(arr[j][j] === "O") {
-			numO +=1;
-		}
-		if (numX === 3 || numO === 3) {
+		if (numX === 3) {
 			return true;
 		}
 	}
-	numO = 0; numX = 0;
+	numX = 0;
 	//Esto revisa en diagonal -> /
 	for(let i = 0; i<3; i++) {
 		for(let j = 0; j<3; j++) {
-			if(arr[j][i-j] === "X") {
+			if(arr[j][i-j] === currentLetter) {
 				numX +=1;
 			}
-			if(arr[j][i-j] === "O") {
-				numO +=1;
-			}
-			if (numX === 3 || numO === 3) {
+			if (numX === 3) {
 				return true;
 			}
 		}
-		numO = 0; numX = 0;
+		numX = 0;
 	}
   return false;
 }
