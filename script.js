@@ -1,37 +1,85 @@
-arr = [[],[],[]];
-let value = "O";
-const winningCombination = [
-	['c00', 'c01', 'c02'], 
-	['c10', 'c11', 'c12'], 
-	['c20', 'c21', 'c22'], 
-	['c00', 'c10', 'c20'], 
-	['c01', 'c11', 'c21'], 
-	['c02', 'c12', 'c22'], 
-	['c00', 'c11', 'c22'], 
-	['c02', 'c11', 'c20']
-	];
+const arr = [
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""]
+];
+let currentLetter = "X";
 
 function turn(cell){
 	let newcell = cell.match(/\d/g);
-	newcell = newcell.join("");
 	const x = parseInt(newcell[0]);
 	const y = parseInt(newcell[1]);
 	document.getElementById(cell).onclick = false;
-	if(arr.length < 9){
-			
-		if(value === 'O'){
-				value = document.getElementById(cell).textContent = "X";
-		}
-		else{
-				value = document.getElementById(cell).textContent = "O";
-		}
-		arr[x][y] = cell;
-		console.log(arr[x][y]);
-		console.log(arr);
-	}
-	checkWinner();
+
+  arr[x][y] = currentLetter;
+  document.getElementById(cell).textContent = currentLetter;
+
+  if(checkWinner(currentLetter)) {
+    alert("Ganador")
+  };
+
+  currentLetter = (currentLetter === "X") ? "O" : "X";
 }
 
-function checkWinner(){
-
+function checkWinner(letter){
+	//Esto revisa en horizontal
+  let numX = 0, numO = 0;
+  for(let i = 0; i<3; i++) {
+		for(let j = 0; j<3; j++) {
+      if(arr[i][j] === "X") {
+        numX +=1;
+      }
+			if(arr[i][j] === "O") {
+        numO +=1;
+      }
+			if (numX === 3 || numO === 3) {
+				return true;
+			}
+		}
+		numO = 0; numX = 0;
+	}
+	//Esto revisa en vertical
+	for(let i = 0; i<3; i++) {
+		for(let j = 0; j<3; j++) {
+			if(arr[j][i] === "X") {
+				numX +=1;
+			}
+			if(arr[j][i] === "O") {
+				numO +=1;
+			}
+			if (numX === 3 || numO === 3) {
+				return true;
+			}
+		}
+		numO = 0; numX = 0;
+	}
+	//Esto revisa en diagonal -> \
+	for(let j = 0; j<3; j++) {
+		if(arr[j][j] === "X") {
+			numX +=1;
+		}
+		if(arr[j][j] === "O") {
+			numO +=1;
+		}
+		if (numX === 3 || numO === 3) {
+			return true;
+		}
+	}
+	numO = 0; numX = 0;
+	//Esto revisa en diagonal -> /
+	for(let i = 0; i<3; i++) {
+		for(let j = 0; j<3; j++) {
+			if(arr[j][i-j] === "X") {
+				numX +=1;
+			}
+			if(arr[j][i-j] === "O") {
+				numO +=1;
+			}
+			if (numX === 3 || numO === 3) {
+				return true;
+			}
+		}
+		numO = 0; numX = 0;
+	}
+  return false;
 }
